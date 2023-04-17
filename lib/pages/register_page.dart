@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -6,22 +5,22 @@ import 'package:login_flutter/components/my_button.dart';
 import 'package:login_flutter/components/my_text_field.dart';
 import 'package:login_flutter/components/square_tile.dart';
 
-class LoginPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   final Function()? onTap;
-  const LoginPage({
+  const RegisterPage({
     Key? key,
     required this.onTap,
   }) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUserIn() async {
+  void signUserUp() async {
     showDialog(
         context: context,
         builder: (context) {
@@ -63,20 +62,20 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 25,
                 ),
                 const Icon(
                   Icons.group,
-                  size: 100,
+                  size: 50,
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-               const Text(
-                  "Login Form!",
+                Text(
+                  "Welcome to My App!",
                   style: TextStyle(
                       fontSize: 18,
-                      color: Colors.red,
+                      color: Colors.grey[700],
                       fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
@@ -98,15 +97,23 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 10,
                 ),
+                MyTextField(
+                  controller: passwordController,
+                  hinText: 'Confirm Password',
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                     const Text(
+                      Text(
                         'Forgot Password?',
                         style: TextStyle(
-                            color: Colors.red,
+                            color: Colors.grey[600],
                             fontWeight: FontWeight.w500),
                       ),
                     ],
@@ -116,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 25,
                 ),
                 MyButton(
-                  onTap: signUserIn,
+                  onTap: signUserUp,
                 ),
                 const SizedBox(
                   height: 25,
@@ -168,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a number?',
+                      'Already have an account?',
                       style: TextStyle(
                           color: Colors.grey[700], fontWeight: FontWeight.bold),
                     ),
@@ -178,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Register now',
+                        'Login now',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
