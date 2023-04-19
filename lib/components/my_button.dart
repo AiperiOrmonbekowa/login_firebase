@@ -5,8 +5,10 @@ class MyButton extends StatelessWidget {
   const MyButton({
     Key? key,
     this.onTap,
+    required this.text,
   }) : super(key: key);
   final Function()? onTap;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +19,10 @@ class MyButton extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
             color: Colors.black, borderRadius: BorderRadius.circular(8)),
-        child: const Center(
+        child: Center(
           child: Text(
-            'Sign in',
-            style: TextStyle(
+            text,
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 16,

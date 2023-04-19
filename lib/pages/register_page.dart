@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:login_flutter/components/my_button.dart';
 import 'package:login_flutter/components/my_text_field.dart';
 import 'package:login_flutter/components/square_tile.dart';
@@ -19,6 +18,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   void signUserUp() async {
     showDialog(
@@ -29,10 +29,15 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         });
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
-    } on FirebaseAuthException catch (e) {
+      if (passwordController.text == confirmPasswordController.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text, password: passwordController.text);
+      } else {
+        showErrorMessage('неверный пароль');
+      }
+      // ignore: use_build_context_synchronously
       Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
     }
   }
@@ -71,11 +76,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text(
-                  "Welcome to My App!",
+                const Text(
+                  "Добро пожоловать!",
                   style: TextStyle(
                       fontSize: 18,
-                      color: Colors.grey[700],
+                      color: Colors.redAccent,
                       fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(
@@ -83,7 +88,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hinText: 'Email',
+                  hinText: 'Эл.адрес',
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -91,39 +96,23 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 MyTextField(
                   controller: passwordController,
-                  hinText: 'Password',
+                  hinText: 'Пароль',
                   obscureText: true,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 MyTextField(
-                  controller: passwordController,
-                  hinText: 'Confirm Password',
+                  controller: confirmPasswordController,
+                  hinText: 'Подтвердите пароль',
                   obscureText: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
                 ),
                 const SizedBox(
                   height: 25,
                 ),
                 MyButton(
                   onTap: signUserUp,
+                  text: 'Продолжать',
                 ),
                 const SizedBox(
                   height: 25,
@@ -139,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       Text(
-                        'Or continue with',
+                        'Или',
                         style: TextStyle(
                             color: Colors.grey[900],
                             fontWeight: FontWeight.w500),
@@ -175,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already have an account?',
+                      'У вас нет аккаунта?',
                       style: TextStyle(
                           color: Colors.grey[700], fontWeight: FontWeight.bold),
                     ),
@@ -185,7 +174,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Login now',
+                        'Логин',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),

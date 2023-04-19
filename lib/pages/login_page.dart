@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:login_flutter/components/my_button.dart';
 import 'package:login_flutter/components/my_text_field.dart';
 import 'package:login_flutter/components/square_tile.dart';
+import 'package:login_flutter/service/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -72,8 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 50,
                 ),
-               const Text(
-                  "Login Form!",
+                const Text(
+                  "Добро пожоловать!",
                   style: TextStyle(
                       fontSize: 18,
                       color: Colors.red,
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyTextField(
                   controller: emailController,
-                  hinText: 'Email',
+                  hinText: 'Эл.адрес',
                   obscureText: false,
                 ),
                 const SizedBox(
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyTextField(
                   controller: passwordController,
-                  hinText: 'Password',
+                  hinText: 'Пароль',
                   obscureText: true,
                 ),
                 const SizedBox(
@@ -102,12 +103,11 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                     const Text(
-                        'Forgot Password?',
+                    children: const [
+                      Text(
+                        'Забыли пароль?',
                         style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.w500),
+                            color: Colors.red, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -117,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 MyButton(
                   onTap: signUserIn,
+                  text: 'Войти',
                 ),
                 const SizedBox(
                   height: 25,
@@ -132,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Text(
-                        'Or continue with',
+                        'Или',
                         style: TextStyle(
                             color: Colors.grey[900],
                             fontWeight: FontWeight.w500),
@@ -151,14 +152,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     SquareTile(
                       imagePath: 'assets/images/gogle.jpg',
+                      onTap: () => AuthService().signInWithGoogle(),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    SquareTile(imagePath: 'assets/images/apple.jpeg'),
+                    SquareTile(
+                        imagePath: 'assets/images/apple.jpeg', onTap: () {}),
                   ],
                 ),
                 const SizedBox(
@@ -168,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a number?',
+                      'У вас нет аккаунта?',
                       style: TextStyle(
                           color: Colors.grey[700], fontWeight: FontWeight.bold),
                     ),
@@ -178,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: widget.onTap,
                       child: const Text(
-                        'Register now',
+                        'Зарегистрируйтесь',
                         style: TextStyle(
                             color: Colors.blue, fontWeight: FontWeight.bold),
                       ),
