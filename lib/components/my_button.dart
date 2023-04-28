@@ -19,7 +19,7 @@ class MyButton extends StatelessWidget {
             color: Colors.black, borderRadius: BorderRadius.circular(8)),
         child: const Center(
           child: Text(
-            'Sign in',
+            'Войти',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
